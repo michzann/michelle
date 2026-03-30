@@ -31,15 +31,15 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            label4 = new Label();
+            linkLabel1 = new LinkLabel();
             label3 = new Label();
-            comboBox1 = new ComboBox();
+            role = new ComboBox();
             label2 = new Label();
             label1 = new Label();
             button1 = new Button();
-            textBox2 = new TextBox();
-            textBox1 = new TextBox();
-            linkLabel1 = new LinkLabel();
-            label4 = new Label();
+            pass = new TextBox();
+            username = new TextBox();
             guna2Panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -50,12 +50,12 @@
             guna2Panel1.Controls.Add(label4);
             guna2Panel1.Controls.Add(linkLabel1);
             guna2Panel1.Controls.Add(label3);
-            guna2Panel1.Controls.Add(comboBox1);
+            guna2Panel1.Controls.Add(role);
             guna2Panel1.Controls.Add(label2);
             guna2Panel1.Controls.Add(label1);
             guna2Panel1.Controls.Add(button1);
-            guna2Panel1.Controls.Add(textBox2);
-            guna2Panel1.Controls.Add(textBox1);
+            guna2Panel1.Controls.Add(pass);
+            guna2Panel1.Controls.Add(username);
             guna2Panel1.CustomBorderColor = Color.FromArgb(192, 255, 255);
             guna2Panel1.CustomizableEdges = customizableEdges1;
             guna2Panel1.FillColor = Color.FromArgb(192, 255, 255);
@@ -64,6 +64,29 @@
             guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges2;
             guna2Panel1.Size = new Size(295, 352);
             guna2Panel1.TabIndex = 0;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.BackColor = Color.Transparent;
+            label4.Location = new Point(27, 314);
+            label4.Name = "label4";
+            label4.Size = new Size(115, 15);
+            label4.TabIndex = 8;
+            label4.Text = "Don't have account?";
+            // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.BackColor = Color.Transparent;
+            linkLabel1.LinkColor = Color.Black;
+            linkLabel1.Location = new Point(218, 314);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(48, 15);
+            linkLabel1.TabIndex = 7;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "Sign Up";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // label3
             // 
@@ -75,15 +98,15 @@
             label3.Text = "Role";
             label3.Click += label3_Click;
             // 
-            // comboBox1
+            // role
             // 
-            comboBox1.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Vendor", "Customer" });
-            comboBox1.Location = new Point(30, 235);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(237, 23);
-            comboBox1.TabIndex = 5;
+            role.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            role.FormattingEnabled = true;
+            role.Items.AddRange(new object[] { "Vendor", "Customer" });
+            role.Location = new Point(30, 235);
+            role.Name = "role";
+            role.Size = new Size(237, 23);
+            role.TabIndex = 5;
             // 
             // label2
             // 
@@ -113,44 +136,22 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
-            // textBox2
+            // pass
             // 
-            textBox2.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox2.Location = new Point(30, 183);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(237, 22);
-            textBox2.TabIndex = 1;
+            pass.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            pass.Location = new Point(30, 183);
+            pass.Name = "pass";
+            pass.Size = new Size(237, 22);
+            pass.TabIndex = 1;
             // 
-            // textBox1
+            // username
             // 
-            textBox1.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.Location = new Point(30, 131);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(237, 22);
-            textBox1.TabIndex = 0;
-            // 
-            // linkLabel1
-            // 
-            linkLabel1.AutoSize = true;
-            linkLabel1.BackColor = Color.Transparent;
-            linkLabel1.LinkColor = Color.Black;
-            linkLabel1.Location = new Point(218, 314);
-            linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(48, 15);
-            linkLabel1.TabIndex = 7;
-            linkLabel1.TabStop = true;
-            linkLabel1.Text = "Sign Up";
-            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.BackColor = Color.Transparent;
-            label4.Location = new Point(27, 314);
-            label4.Name = "label4";
-            label4.Size = new Size(115, 15);
-            label4.TabIndex = 8;
-            label4.Text = "Don't have account?";
+            username.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            username.Location = new Point(30, 131);
+            username.Name = "username";
+            username.Size = new Size(237, 22);
+            username.TabIndex = 0;
+            username.TextChanged += textBox1_TextChanged;
             // 
             // Form1
             // 
@@ -160,6 +161,7 @@
             Controls.Add(guna2Panel1);
             Name = "Form1";
             Text = "Form1";
+            Load += Form1_Load;
             guna2Panel1.ResumeLayout(false);
             guna2Panel1.PerformLayout();
             ResumeLayout(false);
@@ -169,10 +171,10 @@
 
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Button button1;
-        private TextBox textBox2;
-        private TextBox textBox1;
+        private TextBox pass;
+        private TextBox username;
         private Label label3;
-        private ComboBox comboBox1;
+        private ComboBox role;
         private Label label2;
         private Label label1;
         private LinkLabel linkLabel1;

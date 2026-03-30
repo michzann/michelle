@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             label16 = new Label();
             button1 = new Button();
@@ -89,11 +89,11 @@
             guna2Panel1.Controls.Add(phone);
             guna2Panel1.Controls.Add(label1);
             guna2Panel1.CustomBorderColor = Color.FromArgb(192, 255, 255);
-            guna2Panel1.CustomizableEdges = customizableEdges3;
+            guna2Panel1.CustomizableEdges = customizableEdges1;
             guna2Panel1.FillColor = Color.FromArgb(192, 255, 255);
             guna2Panel1.Location = new Point(49, 44);
             guna2Panel1.Name = "guna2Panel1";
-            guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges2;
             guna2Panel1.Size = new Size(706, 426);
             guna2Panel1.TabIndex = 0;
             // 
@@ -414,6 +414,7 @@
             Controls.Add(guna2Panel1);
             Name = "Register";
             Text = "Register";
+            Load += Register_Load;
             guna2Panel1.ResumeLayout(false);
             guna2Panel1.PerformLayout();
             groupBox2.ResumeLayout(false);
