@@ -31,6 +31,7 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            linkLabel1 = new LinkLabel();
             label3 = new Label();
             comboBox1 = new ComboBox();
             label2 = new Label();
@@ -38,8 +39,6 @@
             button1 = new Button();
             textBox2 = new TextBox();
             textBox1 = new TextBox();
-            linkLabel1 = new LinkLabel();
-            label4 = new Label();
             guna2Panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -47,7 +46,6 @@
             // 
             guna2Panel1.BorderRadius = 50;
             guna2Panel1.BorderThickness = 50;
-            guna2Panel1.Controls.Add(label4);
             guna2Panel1.Controls.Add(linkLabel1);
             guna2Panel1.Controls.Add(label3);
             guna2Panel1.Controls.Add(comboBox1);
@@ -64,6 +62,19 @@
             guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges2;
             guna2Panel1.Size = new Size(295, 352);
             guna2Panel1.TabIndex = 0;
+            // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.BackColor = Color.Transparent;
+            linkLabel1.LinkColor = Color.Black;
+            linkLabel1.Location = new Point(218, 314);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(48, 15);
+            linkLabel1.TabIndex = 7;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "Sign Up";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // label3
             // 
@@ -129,29 +140,6 @@
             textBox1.Size = new Size(237, 22);
             textBox1.TabIndex = 0;
             // 
-            // linkLabel1
-            // 
-            linkLabel1.AutoSize = true;
-            linkLabel1.BackColor = Color.Transparent;
-            linkLabel1.LinkColor = Color.Black;
-            linkLabel1.Location = new Point(218, 314);
-            linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(48, 15);
-            linkLabel1.TabIndex = 7;
-            linkLabel1.TabStop = true;
-            linkLabel1.Text = "Sign Up";
-            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.BackColor = Color.Transparent;
-            label4.Location = new Point(27, 314);
-            label4.Name = "label4";
-            label4.Size = new Size(115, 15);
-            label4.TabIndex = 8;
-            label4.Text = "Don't have account?";
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -176,6 +164,5 @@
         private Label label2;
         private Label label1;
         private LinkLabel linkLabel1;
-        private Label label4;
     }
 }
