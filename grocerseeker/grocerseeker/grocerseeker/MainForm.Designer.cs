@@ -30,23 +30,23 @@
         {
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2GradientPanel1 = new Guna.UI2.WinForms.Guna2GradientPanel();
+            LogOut = new Guna.UI2.WinForms.Guna2Button();
+            guna2Button6 = new Guna.UI2.WinForms.Guna2Button();
+            Product = new Guna.UI2.WinForms.Guna2Button();
+            Profile = new Guna.UI2.WinForms.Guna2Button();
             Login = new Label();
             label1 = new Label();
-            Profile = new Guna.UI2.WinForms.Guna2Button();
-            Product = new Guna.UI2.WinForms.Guna2Button();
-            guna2Button6 = new Guna.UI2.WinForms.Guna2Button();
-            LogOut = new Guna.UI2.WinForms.Guna2Button();
             guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             guna2GradientPanel1.SuspendLayout();
             SuspendLayout();
@@ -71,67 +71,26 @@
             guna2GradientPanel1.Size = new Size(183, 452);
             guna2GradientPanel1.TabIndex = 0;
             // 
-            // Login
+            // LogOut
             // 
-            Login.AutoSize = true;
-            Login.Location = new Point(15, 68);
-            Login.Name = "Login";
-            Login.Size = new Size(43, 15);
-            Login.TabIndex = 2;
-            Login.Text = "Login, ";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(15, 42);
-            label1.Name = "label1";
-            label1.Size = new Size(63, 15);
-            label1.TabIndex = 1;
-            label1.Text = "Welcome, ";
-            // 
-            // Profile
-            // 
-            Profile.BackColor = Color.Transparent;
-            Profile.BorderColor = Color.Transparent;
-            Profile.BorderRadius = 15;
-            Profile.CustomizableEdges = customizableEdges7;
-            Profile.DisabledState.BorderColor = Color.DarkGray;
-            Profile.DisabledState.CustomBorderColor = Color.DarkGray;
-            Profile.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            Profile.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            Profile.FillColor = Color.Turquoise;
-            Profile.Font = new Font("Segoe UI", 9F);
-            Profile.ForeColor = Color.White;
-            Profile.Location = new Point(28, 177);
-            Profile.Name = "Profile";
-            Profile.PressedDepth = 25;
-            Profile.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            Profile.Size = new Size(129, 38);
-            Profile.TabIndex = 3;
-            Profile.Text = "Profile";
-            Profile.Click += guna2Button1_Click;
-            // 
-            // Product
-            // 
-            Product.BackColor = Color.Transparent;
-            Product.BorderColor = Color.Transparent;
-            Product.BorderRadius = 15;
-            Product.CustomizableEdges = customizableEdges5;
-            Product.DisabledState.BorderColor = Color.DarkGray;
-            Product.DisabledState.CustomBorderColor = Color.DarkGray;
-            Product.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            Product.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            Product.FillColor = Color.Turquoise;
-            Product.Font = new Font("Segoe UI", 9F);
-            Product.ForeColor = Color.White;
-            Product.Location = new Point(28, 221);
-            Product.Name = "Product";
-            Product.PressedDepth = 25;
-            Product.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            Product.Size = new Size(129, 38);
-            Product.TabIndex = 7;
-            Product.Text = "Product";
-            Product.Click += guna2Button5_Click;
+            LogOut.BackColor = Color.Transparent;
+            LogOut.BorderColor = Color.Transparent;
+            LogOut.BorderRadius = 15;
+            LogOut.CustomizableEdges = customizableEdges1;
+            LogOut.DisabledState.BorderColor = Color.DarkGray;
+            LogOut.DisabledState.CustomBorderColor = Color.DarkGray;
+            LogOut.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            LogOut.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            LogOut.FillColor = Color.Turquoise;
+            LogOut.Font = new Font("Segoe UI", 9F);
+            LogOut.ForeColor = Color.White;
+            LogOut.Location = new Point(28, 382);
+            LogOut.Name = "LogOut";
+            LogOut.PressedDepth = 25;
+            LogOut.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            LogOut.Size = new Size(129, 38);
+            LogOut.TabIndex = 9;
+            LogOut.Text = "LogOut";
             // 
             // guna2Button6
             // 
@@ -155,26 +114,68 @@
             guna2Button6.Text = "Transaction";
             guna2Button6.Click += guna2Button6_Click;
             // 
-            // LogOut
+            // Product
             // 
-            LogOut.BackColor = Color.Transparent;
-            LogOut.BorderColor = Color.Transparent;
-            LogOut.BorderRadius = 15;
-            LogOut.CustomizableEdges = customizableEdges1;
-            LogOut.DisabledState.BorderColor = Color.DarkGray;
-            LogOut.DisabledState.CustomBorderColor = Color.DarkGray;
-            LogOut.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            LogOut.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            LogOut.FillColor = Color.Turquoise;
-            LogOut.Font = new Font("Segoe UI", 9F);
-            LogOut.ForeColor = Color.White;
-            LogOut.Location = new Point(28, 382);
-            LogOut.Name = "LogOut";
-            LogOut.PressedDepth = 25;
-            LogOut.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            LogOut.Size = new Size(129, 38);
-            LogOut.TabIndex = 9;
-            LogOut.Text = "LogOut";
+            Product.BackColor = Color.Transparent;
+            Product.BorderColor = Color.Transparent;
+            Product.BorderRadius = 15;
+            Product.CustomizableEdges = customizableEdges5;
+            Product.DisabledState.BorderColor = Color.DarkGray;
+            Product.DisabledState.CustomBorderColor = Color.DarkGray;
+            Product.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            Product.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            Product.FillColor = Color.Turquoise;
+            Product.Font = new Font("Segoe UI", 9F);
+            Product.ForeColor = Color.White;
+            Product.Location = new Point(28, 221);
+            Product.Name = "Product";
+            Product.PressedDepth = 25;
+            Product.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            Product.Size = new Size(129, 38);
+            Product.TabIndex = 7;
+            Product.Text = "Product";
+            Product.Click += guna2Button5_Click;
+            // 
+            // Profile
+            // 
+            Profile.BackColor = Color.Transparent;
+            Profile.BorderColor = Color.Transparent;
+            Profile.BorderRadius = 15;
+            Profile.CustomizableEdges = customizableEdges7;
+            Profile.DisabledState.BorderColor = Color.DarkGray;
+            Profile.DisabledState.CustomBorderColor = Color.DarkGray;
+            Profile.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            Profile.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            Profile.FillColor = Color.Turquoise;
+            Profile.Font = new Font("Segoe UI", 9F);
+            Profile.ForeColor = Color.White;
+            Profile.Location = new Point(28, 177);
+            Profile.Name = "Profile";
+            Profile.PressedDepth = 25;
+            Profile.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            Profile.Size = new Size(129, 38);
+            Profile.TabIndex = 3;
+            Profile.Text = "Profile";
+            Profile.Click += guna2Button1_Click;
+            // 
+            // Login
+            // 
+            Login.AutoSize = true;
+            Login.Location = new Point(15, 68);
+            Login.Name = "Login";
+            Login.Size = new Size(43, 15);
+            Login.TabIndex = 2;
+            Login.Text = "Login, ";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(15, 42);
+            label1.Name = "label1";
+            label1.Size = new Size(63, 15);
+            label1.TabIndex = 1;
+            label1.Text = "Welcome, ";
+            label1.Click += label1_Click;
             // 
             // guna2Panel1
             // 
@@ -184,6 +185,7 @@
             guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges12;
             guna2Panel1.Size = new Size(623, 452);
             guna2Panel1.TabIndex = 1;
+            guna2Panel1.Paint += guna2Panel1_Paint;
             // 
             // MainForm
             // 

@@ -44,7 +44,25 @@ namespace grocerseeker
 
         private void guna2Button1_Click(object sender, EventArgs e)
         {
+            LoadControl(new UserControl1());
 
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        private void LoadControl(UserControl uc)
+        {
+            guna2Panel1.Controls.Clear();
+            uc.Dock = DockStyle.Fill;
+            guna2Panel1.Controls.Add(uc);
         }
     }
 }

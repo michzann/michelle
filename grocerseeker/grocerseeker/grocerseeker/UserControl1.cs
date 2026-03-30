@@ -1,18 +1,27 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using MySql.Data.MySqlClient;
+using Mysqlx.Crud;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace grocerseeker
 {
     public partial class UserControl1 : UserControl
     {
+        DatabaseHelper dbHeloper = new DatabaseHelper();
         public UserControl1()
         {
             InitializeComponent();
+        }
+        public static class UserSession
+        {
+            public static string UserId { get; set; }
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -43,6 +52,104 @@ namespace grocerseeker
         private void label16_Click(object sender, EventArgs e) { }
 
         private void UserControl1_Load(object sender, EventArgs e)
+        {
+            using (MySqlConnection conn = dbHeloper.GetConnection())
+            {
+                // TAMBAHKAN BARIS INI:i9
+                if (conn.State == System.Data.ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                string query = "SELECT * FROM users WHERE id = @Id";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                // Gunakan ID yang sesuai, misal "1" atau variabel dari login
+                cmd.Parameters.AddWithValue("@Id", "1");
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                // ... sisa kode kamu ...
+
+
+                if (reader.Read())
+                {
+                    phone_number.Text = reader["phone_number"].ToString();
+                    email.Text = reader["email"].ToString();
+
+                    // Gunakan Convert untuk menangani berbagai tipe data (int/bool/bit)
+                    bool isCustActive = Convert.ToBoolean(reader["cust_active"]);
+                    bool isVendorActive = Convert.ToBoolean(reader["vendor_active"]);
+
+                    if (isCustActive)
+                    {
+                        checkBox1.Checked = true;
+                        c_name.Text = reader["cust_name"].ToString();
+                        c_addres.Text = reader["cust_addres"].ToString();
+                        c_latitude.Text = reader["cust_latitude"].ToString();
+                        c_longtitude.Text = reader["cust_longtitude"].ToString();
+                    }
+
+                    // Gunakan IF terpisah, jangan ELSE IF, jika user bisa jadi keduanya
+                    if (isVendorActive)
+                    {
+                        checkBox2.Checked = true;
+                        v_name.Text = reader["vendor_name"].ToString();
+                        v_addres.Text = reader["vendor_addres"].ToString();
+                        v_latitude.Text = reader["vendor_latitude"].ToString();
+                        v_longtitude.Text = reader["vendor_longtitude"].ToString();
+                    }
+                }
+                reader.Close();
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            string role;
+            if (checkBox1.Checked) role = "Customer";
+            if (checkBox2.Checked) role = "Vendor";
+
+            string query = @"UPDATE users SET phone_number=@phone_number, email=@email, cust_active=@checkBox1, vendor_active=@checkBox2, cust_name=@c_name,
+               cust_addres=@c_addres, cust_latitude=@c_latitude, cust_longtitude=@c_longtitude, vendor_name=@v_name, vendor_addres=@v_addres,
+               vendor_latitude=@v_latitude, vendor_longtitude=@v_longtitude
+               WHERE id=@user_id";
+            // Ganti baris 117 menjadi:
+            using (MySqlConnection conn = dbHeloper.GetConnection()) // Sesuaikan dengan nama method di DatabaseHelper kamu
+            {
+                try
+                {
+                    conn.Open();
+
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@user_id", UserSession.UserId); //kenapa kak putus2
+                    cmd.Parameters.AddWithValue("@phone_number", phone_number.Text);
+                    cmd.Parameters.AddWithValue("@email", email.Text);
+                    // Ubah @cust_active menjadi @checkBox1 sesuai permintaan error
+                    cmd.Parameters.AddWithValue("@checkBox1", checkBox1.Checked ? 1 : 0);
+                    cmd.Parameters.AddWithValue("@checkBox2", checkBox2.Checked ? 1 : 0);
+                    cmd.Parameters.AddWithValue("@c_name", c_name.Text);
+                    cmd.Parameters.AddWithValue("@c_addres", c_addres.Text);    
+                    cmd.Parameters.AddWithValue("@v_name", v_name.Text);
+                    cmd.Parameters.AddWithValue("@v_addres", v_addres.Text);
+                    cmd.Parameters.AddWithValue("@c_latitude", string.IsNullOrWhiteSpace(c_latitude.Text) ? 0 : double.Parse(c_latitude.Text));
+                    cmd.Parameters.AddWithValue("@c_longtitude", string.IsNullOrWhiteSpace(c_longtitude.Text) ? 0 : double.Parse(c_longtitude.Text));
+                    
+                    cmd.Parameters.AddWithValue("@v_latitude", string.IsNullOrWhiteSpace(v_latitude.Text) ? 0 : double.Parse(v_latitude.Text));
+                    cmd.Parameters.AddWithValue("@v_longtitude", string.IsNullOrWhiteSpace(v_longtitude.Text) ? 0 : double.Parse(v_longtitude.Text));
+
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Data berhasil disimpan!");
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Terjadi kesalahan: " + ex.Message);
+                }
+            }
+        }
+
+        private void v_name_TextChanged(object sender, EventArgs e)
         {
 
         }

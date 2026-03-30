@@ -66,6 +66,8 @@ namespace grocerseeker
                         this.Hide();
                         MainForm Form1 = new MainForm();
                         Form1.ShowDialog();
+
+                        UserSession.UserID = reader["id"].ToString();
                     }
                 }
 

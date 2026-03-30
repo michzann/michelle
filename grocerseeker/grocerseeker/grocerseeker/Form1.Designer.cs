@@ -38,6 +38,7 @@
             label3 = new Label();
             linkLabel1 = new LinkLabel();
             guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            label1 = new Label();
             guna2Panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -114,6 +115,7 @@
             // 
             guna2Panel1.BorderRadius = 50;
             guna2Panel1.BorderThickness = 50;
+            guna2Panel1.Controls.Add(label1);
             guna2Panel1.Controls.Add(linkLabel1);
             guna2Panel1.Controls.Add(label3);
             guna2Panel1.Controls.Add(role);
@@ -129,6 +131,15 @@
             guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges2;
             guna2Panel1.Size = new Size(295, 352);
             guna2Panel1.TabIndex = 0;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(30, 113);
+            label1.Name = "label1";
+            label1.Size = new Size(60, 15);
+            label1.TabIndex = 8;
+            label1.Text = "Username";
             // 
             // Form1
             // 
@@ -154,5 +165,6 @@
         private Label label3;
         private LinkLabel linkLabel1;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
+        private Label label1;
     }
 }

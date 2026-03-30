@@ -7,7 +7,7 @@ namespace grocerseeker
 {
     public class DatabaseHelper
     {
-        private string connectionString = "Server=localhost;Database=grocerseeker;Uid=root;uid=root;pwd=;";
+        private string connectionString = "Server=localhost;Database=grocerseeker;uid=root;pwd=;";
 
         public MySqlConnection GetConnection()
         {
