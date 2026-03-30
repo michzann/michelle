@@ -31,7 +31,6 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
-            label4 = new Label();
             linkLabel1 = new LinkLabel();
             label3 = new Label();
             role = new ComboBox();
@@ -47,7 +46,6 @@
             // 
             guna2Panel1.BorderRadius = 50;
             guna2Panel1.BorderThickness = 50;
-            guna2Panel1.Controls.Add(label4);
             guna2Panel1.Controls.Add(linkLabel1);
             guna2Panel1.Controls.Add(label3);
             guna2Panel1.Controls.Add(role);
@@ -64,16 +62,6 @@
             guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges2;
             guna2Panel1.Size = new Size(295, 352);
             guna2Panel1.TabIndex = 0;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.BackColor = Color.Transparent;
-            label4.Location = new Point(27, 314);
-            label4.Name = "label4";
-            label4.Size = new Size(115, 15);
-            label4.TabIndex = 8;
-            label4.Text = "Don't have account?";
             // 
             // linkLabel1
             // 
@@ -178,6 +166,5 @@
         private Label label2;
         private Label label1;
         private LinkLabel linkLabel1;
-        private Label label4;
     }
 }
