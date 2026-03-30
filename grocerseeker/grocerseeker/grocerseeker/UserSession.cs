@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace grocerseeker
+{
+    public static class UserSession
+    {
+        public static string UserRole { get; set; }
+
+        public static string PhoneNumber { get; set; }
+
+        public static string Username { get; set; }
+
+        public static string UserID { get; set; }
+
+    }
+}
