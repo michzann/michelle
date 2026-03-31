@@ -28,7 +28,7 @@ namespace grocerseeker
                 try
                 {
 
-                    string query = "SELECT id, phone_number, cust_active, cust_name,vendor_name, password FROM users WHERE phone_number=@phone AND password=@pass";
+                    string query = "SELECT * FROM users WHERE phone_number=@phone AND password=@pass";
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@phone", username);
                     cmd.Parameters.AddWithValue("@pass", pass);
@@ -38,9 +38,15 @@ namespace grocerseeker
 
                     if (reader.Read())
                     {
-                        UserSession.UserID = reader["id"].ToString();
+
+                        int userId = Convert.ToInt32(reader["id"]);
+                        UserSession.UserID = userId;
                         UserSession.PhoneNumber = reader["phone_number"].ToString();
 
+                        double latitude = Convert.ToDouble(reader["cust_latitude"]);
+                        UserSession.latitude = latitude;
+                        double longitude = Convert.ToDouble(reader["cust_longtitude"]);
+                        UserSession.longitude = longitude;
                         int isCust = Convert.ToInt32(reader["cust_active"]);
                         string selectedRole = role.SelectedItem.ToString();
 
@@ -66,8 +72,6 @@ namespace grocerseeker
                         this.Hide();
                         MainForm Form1 = new MainForm();
                         Form1.ShowDialog();
-
-                        UserSession.UserID = reader["id"].ToString();
                     }
                 }
 

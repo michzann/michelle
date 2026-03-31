@@ -111,11 +111,7 @@ namespace grocerseeker
 
         private void guna2Button1_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(UserSession.UserID))
-            {
-                MessageBox.Show("Sesi login habis, silahkan login ulang.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+
 
             if (guna2TextBox1 == null || guna2NumericUpDown1 == null || guna2NumericUpDown2 == null || comboBox1 == null || comboBox2 == null)
             {
@@ -238,113 +234,71 @@ namespace grocerseeker
 
         private void guna2DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return;
+            // 1. Validasi klik row
+            if (e.RowIndex < 0 || dataGridView1.Rows.Count == 0)
+                return;
 
-            DataGridViewRow row = guna2DataGridView1.Rows[e.RowIndex];
-            if (row.Cells["id"] != null && row.Cells["id"].Value != DBNull.Value)
-            {
-                selectedID = Convert.ToInt32(row.Cells["id"].Value);
-            }
-            if (row.Cells["vendor_id"] != null && row.Cells["vendor_id"].Value != DBNull.Value)
-            {
-                selectedVendorId = Convert.ToInt32(row.Cells["vendor_id"].Value);
-            }
-
-            if (guna2TextBox1 != null && guna2NumericUpDown1 != null && guna2NumericUpDown2 != null)
-            {
-                guna2TextBox1.Text = row.Cells["product_name"].Value?.ToString() ?? string.Empty;
-                if (row.Cells["price_per_unit"].Value != null)
-                    guna2NumericUpDown1.Value = Convert.ToDecimal(row.Cells["price_per_unit"].Value);
-                if (row.Cells["unit_stock"].Value != null)
-                    guna2NumericUpDown2.Value = Convert.ToDecimal(row.Cells["unit_stock"].Value);
-            }
-            try
-            {
-                var isActiveVal = row.Cells["is_active"].Value;
-                if (comboBox2 != null)
-                {
-                    if (isActiveVal != null && isActiveVal != DBNull.Value)
-                    {
-                        int ia = Convert.ToInt32(isActiveVal);
-                        comboBox2.Text = (ia == 1) ? "active" : "inactive";
-                    }
-                    else
-                    {
-                        comboBox2.SelectedIndex = -1;
-                    }
-                }
-            }
-            catch
-            {
-                if (comboBox2 != null) comboBox2.SelectedIndex = -1;
-            }
-            try
-            {
-                var catVal = row.Cells["category_id"].Value;
-                if (comboBox1 != null)
-                {
-                    if (catVal != null && catVal != DBNull.Value)
-                    {
-                        comboBox1.SelectedValue = Convert.ToInt32(catVal);
-                    }
-                    else
-                    {
-                        comboBox1.SelectedIndex = -1;
-                    }
-                }
-            }
-            catch
-            {
-                if (comboBox1 != null)
-                    comboBox1.SelectedIndex = -1;
-            }
+            DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
             try
             {
-                var ut = row.Cells["unit_type"].Value;
-                if (ut != null && ut != DBNull.Value)
+                // 2. Ambil ID utama
+                selectedID = GetInt(row, "id");
+                selectedVendorId = GetInt(row, "vendor_id");
+
+                // 3. Ambil data utama
+                string productName = GetString(row, "product_name");
+                double priceVal = GetDouble(row, "price_per_unit");
+                double stockVal = GetDouble(row, "unit_stock");
+                string unitType = GetString(row, "unit_type");
+
+                // Simpan ke global
+                price = priceVal;
+                stock = stockVal;
+
+                // 4. Tampilkan ke UI (SAFE)
+                if (guna2TextBox1 != null)
+                    guna2TextBox1.Text = productName;
+
+                if (guna2NumericUpDown1 != null)
+                    guna2NumericUpDown1.Value = (decimal)priceVal;
+
+                if (guna2NumericUpDown2 != null)
+                    guna2NumericUpDown2.Value = (decimal)stockVal;
+
+                // 5. Set category
+                if (comboBox1 != null && row.Cells["category_id"] != null)
                 {
-                    string uts = ut.ToString().ToLower();
-                    if (uts.Contains("count"))
-                    {
-                        if (guna2RadioButton1 != null) guna2RadioButton1.Checked = true;
-                        if (guna2RadioButton2 != null) guna2RadioButton2.Checked = false;
-                    }
-                    else if (uts.Contains("measure"))
-                    {
-                        if (guna2RadioButton2 != null) guna2RadioButton2.Checked = true;
-                        if (guna2RadioButton1 != null) guna2RadioButton1.Checked = false;
-                    }
-                    else
-                    {
-                        if (guna2RadioButton1 != null) guna2RadioButton1.Checked = false;
-                        if (guna2RadioButton2 != null) guna2RadioButton2.Checked = false;
-                    }
+                    comboBox1.SelectedValue = GetInt(row, "category_id");
                 }
-                else
+
+                // 6. Set status (vendor mode)
+                if (comboBox2 != null && row.Cells["is_active"] != null)
                 {
-                    guna2RadioButton1.Checked = false;
-                    guna2RadioButton2.Checked = false;
+                    int status = GetInt(row, "is_active");
+                    comboBox2.Text = (status == 1) ? "active" : "inactive";
                 }
-            }
-            catch
-            {
-                guna2RadioButton1.Checked = false;
-                guna2RadioButton2.Checked = false;
-            }
 
+                // 7. Set unit type
+                if (guna2RadioButton1 != null && guna2RadioButton2 != null)
+                {
+                    guna2RadioButton1.Checked = unitType.Contains("count");
+                    guna2RadioButton2.Checked = unitType.Contains("measure");
+                }
 
-            if (row.Cells["price_per_unit"].Value != null)
-                price = Convert.ToDouble(row.Cells["price_per_unit"].Value);
-            if (row.Cells["unit_stock"].Value != null)
-                stock = Convert.ToDouble(row.Cells["unit_stock"].Value);
+                // 8. Reset quantity
+                if (guna2NumericUpDown3 != null)
+                {
+                    guna2NumericUpDown3.Value = 1;
+                }
 
-            if (guna2NumericUpDown3 != null)
-            {
-                guna2NumericUpDown3.Value = 1;
+                // 9. Hitung total
                 HitungTotal();
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error saat memilih data: " + ex.Message);
+            }
 
         }
 
@@ -406,50 +360,6 @@ namespace grocerseeker
             }
         }
 
-        private void guna2Button3_Click(object sender, EventArgs e)
-        {
-            if (selectedID == 0)
-            {
-                MessageBox.Show("Silahkan pilih data di tabel terlebih dahulu!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-
-            DialogResult dialogResult = MessageBox.Show($"Apakah Anda yakin ingin menghapus data dengan ID: {selectedID}?",
-                "Konfirmasi Hapus", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (dialogResult == DialogResult.Yes)
-            {
-                using (MySqlConnection conn = dbhelper.GetConnection())
-                {
-                    try
-                    {
-
-                        string query = "UPDATE products SET delete_at = NOW() WHERE id=@id";
-                        MySqlCommand cmd = new MySqlCommand(query, conn);
-                        cmd.Parameters.AddWithValue("@id", selectedID);
-
-                        conn.Open();
-                        int result = cmd.ExecuteNonQuery();
-
-                        if (result > 0)
-                        {
-                            MessageBox.Show("Data berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            LoadData();
-                            selectedID = 0;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Tidak ada data yang terhapus. ID mungkin tidak ditemukan.");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error saat menghapus: " + ex.Message);
-                    }
-                }
-            }
-        }
 
         private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -520,7 +430,7 @@ namespace grocerseeker
         // Designer referenced handler - keep for compatibility with generated Designer file
         private void guna2NumericUpDown3_ValueChanged_1(object sender, EventArgs e)
         {
-            if (_suppressNumericUpDown3Events) return;
+
             HitungTotal();
         }
 
@@ -668,16 +578,37 @@ namespace grocerseeker
             return R * c;
         }
 
+
+        private int GetInt(DataGridViewRow row, string col)
+        {
+            if (row.Cells[col] == null || row.Cells[col].Value == DBNull.Value)
+                return 0;
+
+            return Convert.ToInt32(row.Cells[col].Value);
+        }
+
+        private double GetDouble(DataGridViewRow row, string col)
+        {
+            if (row.Cells[col] == null || row.Cells[col].Value == DBNull.Value)
+                return 0;
+
+            return Convert.ToDouble(row.Cells[col].Value);
+        }
+
+        private string GetString(DataGridViewRow row, string col)
+        {
+            if (row.Cells[col] == null || row.Cells[col].Value == DBNull.Value)
+                return "";
+
+            return row.Cells[col].Value.ToString();
+        }
+
         private static double ToRadians(double angle)
         {
             return angle * Math.PI / 180.0;
         }
 
-        private void guna2Button7_Click(object sender, EventArgs e)
-        {
-            string name = (guna2TextBox1 != null) ? guna2TextBox1.Text : (guna2DataGridView1.CurrentRow != null ? guna2DataGridView1.CurrentRow.Cells["products_name"].Value?.ToString() : "(unknown)");
-            MessageBox.Show("Purchase successful for " + name);
-        }
+
 
         private void guna2Button6_Click(object sender, EventArgs e)
         {
@@ -696,7 +627,134 @@ namespace grocerseeker
 
         private void guna2Button1_Click_1(object sender, EventArgs e)
         {
+            if (selectedID == 0)
+            {
+                MessageBox.Show("Pilih produk terlebih dahulu!");
+                return;
+            }
+
+            double qty = (double)guna2NumericUpDown3.Value;
+
+            // VALIDASI
+            if (qty <= 0)
+            {
+                MessageBox.Show("Quantity harus lebih dari 0!");
+                return;
+            }
+
+            if (qty > stock)
+            {
+                MessageBox.Show("Stock tidak mencukupi!");
+                return;
+            }
+
+            using (MySqlConnection conn = dbhelper.GetConnection())
+            {
+                conn.Open();
+                MySqlTransaction transaction = conn.BeginTransaction();
+
+                try
+                {
+                    // 🔹 1. CEK LIMIT PENDING (MAX 10)
+                    string checkQuery = "SELECT COUNT(*) FROM transaction WHERE custumer_id = @cust AND status = 'pending'";
+                    MySqlCommand checkCmd = new MySqlCommand(checkQuery, conn, transaction);
+                    checkCmd.Parameters.AddWithValue("@cust", UserSession.UserID);
+
+                    int pendingCount = Convert.ToInt32(checkCmd.ExecuteScalar());
+
+                    if (pendingCount >= 10)
+                    {
+
+                        MessageBox.Show("Maksimal 10 pending transaksi!");
+                        transaction.Rollback();
+                        return;
+                    }
+
+                    // 🔹 2. HITUNG TOTAL
+                    double total = price * qty;
+
+                    // 🔹 3. HITUNG DELIVERY COST (SUDAH ADA DI METHOD KAMU)
+                    double delivery = GetDeliveryCost();
+
+                    // 🔹 4. INSERT TRANSACTION
+                    string insertQuery = @"INSERT INTO transaction
+                        (vendor_id, custumer_id, product_id, quantity, total_price, delivery_cost, status, create_at,update_at)
+                        VALUES (@vendor, @cust, @product, @qty, @total, @delivery, 'pending', NOW(),NOW()) ";
+
+                    MySqlCommand insertCmd = new MySqlCommand(insertQuery, conn, transaction);
+                    insertCmd.Parameters.AddWithValue("@vendor", selectedVendorId);
+                    insertCmd.Parameters.AddWithValue("@cust", UserSession.UserID);
+                    insertCmd.Parameters.AddWithValue("@product", selectedID);
+                    insertCmd.Parameters.AddWithValue("@qty", qty);
+                    insertCmd.Parameters.AddWithValue("@total", total);
+                    insertCmd.Parameters.AddWithValue("@delivery", delivery);
+
+                    insertCmd.ExecuteNonQuery();
+
+                    // 🔹 5. UPDATE STOCK
+                    string updateStock = "UPDATE products SET unit_stock = unit_stock - @qty WHERE id = @id";
+
+                    MySqlCommand stockCmd = new MySqlCommand(updateStock, conn, transaction);
+                    stockCmd.Parameters.AddWithValue("@qty", qty);
+                    stockCmd.Parameters.AddWithValue("@id", selectedID);
+
+                    stockCmd.ExecuteNonQuery();
+
+                    // 🔹 COMMIT
+                    transaction.Commit();
+
+                    MessageBox.Show("Pembelian berhasil (Pending)!");
+
+                    LoadData();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    MessageBox.Show("Error Buy: " + ex.Message);
+                }
+            }
+        }
+
+        private double GetDeliveryCost()
+        {
+            try
+            {
+                double per100km = 15000;
+
+                double custLat = Convert.ToDouble(UserSession.latitude);
+                double custLng = Convert.ToDouble(UserSession.longitude);
+
+                using (MySqlConnection conn = dbhelper.GetConnection())
+                {
+                    conn.Open();
+
+                    string query = "SELECT vendor_latitude, vendor_longitude FROM users WHERE id = @id";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@id", selectedVendorId);
+
+                    using (var r = cmd.ExecuteReader())
+                    {
+                        if (r.Read())
+                        {
+                            double vLat = Convert.ToDouble(r["vendor_latitude"]);
+                            double vLng = Convert.ToDouble(r["vendor_longitude"]);
+
+                            double dist = HaversineDistance(custLat, custLng, vLat, vLng);
+
+                            return Math.Ceiling(dist / 100.0) * per100km;
+                        }
+                    }
+                }
+            }
+            catch { }
+
+            return 15000; // fallback
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
         }
     }
+
 }

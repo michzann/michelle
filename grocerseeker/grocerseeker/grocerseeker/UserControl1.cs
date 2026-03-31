@@ -61,12 +61,7 @@ namespace grocerseeker
                 string query = "SELECT * FROM users WHERE id = @Id";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
-                // Jika user belum login, jangan load profile
-                if (string.IsNullOrWhiteSpace(UserSession.UserID))
-                {
-                    // No user session available
-                    return;
-                }
+
                 cmd.Parameters.AddWithValue("@Id", Convert.ToInt32(UserSession.UserID));
 
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -124,11 +119,7 @@ namespace grocerseeker
                     conn.Open();
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
-                    if (string.IsNullOrWhiteSpace(UserSession.UserID))
-                    {
-                        MessageBox.Show("User id tidak diset. Tidak bisa menyimpan.");
-                        return;
-                    }
+
                     cmd.Parameters.AddWithValue("@user_id", Convert.ToInt32(UserSession.UserID));
                     cmd.Parameters.AddWithValue("@phone_number", phone_number.Text);
                     cmd.Parameters.AddWithValue("@email", email.Text);

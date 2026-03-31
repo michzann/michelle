@@ -45,8 +45,6 @@
             guna2GroupBox1 = new Guna.UI2.WinForms.Guna2GroupBox();
             label2 = new Label();
             dataGridView1 = new DataGridView();
-            labelPending = new Label();
-            dataGridViewPending = new DataGridView();
             label4 = new Label();
             guna2GroupBox3 = new Guna.UI2.WinForms.Guna2GroupBox();
             guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
@@ -60,7 +58,6 @@
             label5 = new Label();
             guna2GroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewPending).BeginInit();
             guna2GroupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)guna2NumericUpDown3).BeginInit();
             SuspendLayout();
@@ -79,8 +76,6 @@
             // 
             guna2GroupBox1.Controls.Add(label2);
             guna2GroupBox1.Controls.Add(dataGridView1);
-            guna2GroupBox1.Controls.Add(labelPending);
-            guna2GroupBox1.Controls.Add(dataGridViewPending);
             guna2GroupBox1.CustomBorderThickness = new Padding(0, 20, 0, 0);
             guna2GroupBox1.CustomizableEdges = customizableEdges1;
             guna2GroupBox1.Font = new Font("Segoe UI", 9F);
@@ -88,7 +83,7 @@
             guna2GroupBox1.Location = new Point(6, 36);
             guna2GroupBox1.Name = "guna2GroupBox1";
             guna2GroupBox1.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            guna2GroupBox1.Size = new Size(592, 234);
+            guna2GroupBox1.Size = new Size(592, 255);
             guna2GroupBox1.TabIndex = 2;
             guna2GroupBox1.Text = " ";
             // 
@@ -131,30 +126,10 @@
             dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
             dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            dataGridView1.Size = new Size(587, 100);
+            dataGridView1.Size = new Size(587, 217);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellClick += guna2DataGridView1_CellClick;
-            // 
-            // labelPending
-            // 
-            labelPending.AutoSize = true;
-            labelPending.ForeColor = Color.Black;
-            labelPending.Location = new Point(3, 120);
-            labelPending.Name = "labelPending";
-            labelPending.Size = new Size(51, 15);
-            labelPending.TabIndex = 2;
-            labelPending.Text = "Pending";
-            // 
-            // dataGridViewPending
-            // 
-            dataGridViewPending.AllowUserToAddRows = false;
-            dataGridViewPending.Location = new Point(2, 140);
-            dataGridViewPending.Name = "dataGridViewPending";
-            dataGridViewPending.ReadOnly = true;
-            dataGridViewPending.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewPending.Size = new Size(587, 60);
-            dataGridViewPending.TabIndex = 3;
-            dataGridViewPending.CellClick += dataGridViewPending_CellClick;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // label4
             // 
@@ -317,7 +292,6 @@
             guna2GroupBox1.ResumeLayout(false);
             guna2GroupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewPending).EndInit();
             guna2GroupBox3.ResumeLayout(false);
             guna2GroupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)guna2NumericUpDown3).EndInit();
@@ -331,8 +305,6 @@
         private Guna.UI2.WinForms.Guna2GroupBox guna2GroupBox1;
         private Label label2;
         private DataGridView dataGridView1;
-        private Label labelPending;
-        private DataGridView dataGridViewPending;
         private Label label4;
         private Guna.UI2.WinForms.Guna2GroupBox guna2GroupBox3;
         private Label label5;
