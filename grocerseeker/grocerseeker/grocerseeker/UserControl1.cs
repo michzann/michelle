@@ -19,10 +19,7 @@ namespace grocerseeker
         {
             InitializeComponent();
         }
-        public static class UserSession
-        {
-            public static string UserId { get; set; }
-        }
+        // Use global UserSession class (defined in UserSession.cs)
 
         private void label2_Click(object sender, EventArgs e)
         {
@@ -64,8 +61,13 @@ namespace grocerseeker
                 string query = "SELECT * FROM users WHERE id = @Id";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
-                // Gunakan ID yang sesuai, misal "1" atau variabel dari login
-                cmd.Parameters.AddWithValue("@Id", "1");
+                // Jika user belum login, jangan load profile
+                if (string.IsNullOrWhiteSpace(UserSession.UserID))
+                {
+                    // No user session available
+                    return;
+                }
+                cmd.Parameters.AddWithValue("@Id", Convert.ToInt32(UserSession.UserID));
 
                 MySqlDataReader reader = cmd.ExecuteReader();
                 // ... sisa kode kamu ...
@@ -122,7 +124,12 @@ namespace grocerseeker
                     conn.Open();
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@user_id", UserSession.UserId); //kenapa kak putus2
+                    if (string.IsNullOrWhiteSpace(UserSession.UserID))
+                    {
+                        MessageBox.Show("User id tidak diset. Tidak bisa menyimpan.");
+                        return;
+                    }
+                    cmd.Parameters.AddWithValue("@user_id", Convert.ToInt32(UserSession.UserID));
                     cmd.Parameters.AddWithValue("@phone_number", phone_number.Text);
                     cmd.Parameters.AddWithValue("@email", email.Text);
                     // Ubah @cust_active menjadi @checkBox1 sesuai permintaan error
@@ -132,11 +139,17 @@ namespace grocerseeker
                     cmd.Parameters.AddWithValue("@c_addres", c_addres.Text);    
                     cmd.Parameters.AddWithValue("@v_name", v_name.Text);
                     cmd.Parameters.AddWithValue("@v_addres", v_addres.Text);
-                    cmd.Parameters.AddWithValue("@c_latitude", string.IsNullOrWhiteSpace(c_latitude.Text) ? 0 : double.Parse(c_latitude.Text));
-                    cmd.Parameters.AddWithValue("@c_longtitude", string.IsNullOrWhiteSpace(c_longtitude.Text) ? 0 : double.Parse(c_longtitude.Text));
-                    
-                    cmd.Parameters.AddWithValue("@v_latitude", string.IsNullOrWhiteSpace(v_latitude.Text) ? 0 : double.Parse(v_latitude.Text));
-                    cmd.Parameters.AddWithValue("@v_longtitude", string.IsNullOrWhiteSpace(v_longtitude.Text) ? 0 : double.Parse(v_longtitude.Text));
+                    double cLat = 0, cLong = 0, vLat = 0, vLong = 0;
+                    double.TryParse(c_latitude.Text, out cLat);
+                    double.TryParse(c_longtitude.Text, out cLong);
+                    double.TryParse(v_latitude.Text, out vLat);
+                    double.TryParse(v_longtitude.Text, out vLong);
+
+                    cmd.Parameters.AddWithValue("@c_latitude", cLat);
+                    cmd.Parameters.AddWithValue("@c_longtitude", cLong);
+
+                    cmd.Parameters.AddWithValue("@v_latitude", vLat);
+                    cmd.Parameters.AddWithValue("@v_longtitude", vLong);
 
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Data berhasil disimpan!");

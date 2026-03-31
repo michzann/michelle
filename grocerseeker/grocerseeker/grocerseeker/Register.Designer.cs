@@ -114,7 +114,7 @@
             button1.Name = "button1";
             button1.Size = new Size(271, 29);
             button1.TabIndex = 13;
-            button1.Text = "button1";
+            button1.Text = "Register";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 

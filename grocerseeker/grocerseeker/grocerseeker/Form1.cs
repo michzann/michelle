@@ -60,7 +60,7 @@ namespace grocerseeker
                             MessageBox.Show("Role tidak sesuai dengan akun!", "Login Gagal", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
-
+                        MessageBox.Show(UserSession.Username);
                         MessageBox.Show("Login Berhasil!", "Sukses");
 
                         this.Hide();
@@ -92,6 +92,11 @@ namespace grocerseeker
         }
 
         private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
         {
 
         }

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 namespace grocerseeker
 {
+
     public partial class MainForm : Form
     {
         private string username = UserSession.Username;
@@ -26,7 +27,7 @@ namespace grocerseeker
         private void MainForm_Load(object sender, EventArgs e)
         {
 
-            label1.Text = "Welcome, " + UserSession.Username;
+            label1.Text = $"Welcome, {UserSession.Username}";
 
 
             Login.Text = "Login As, " + UserSession.UserRole;
@@ -34,12 +35,20 @@ namespace grocerseeker
 
         private void guna2Button6_Click(object sender, EventArgs e)
         {
-
+           LoadControl(new Transaction());
         }
 
         private void guna2Button5_Click(object sender, EventArgs e)
         {
-
+            // Match role case-insensitively and fix typo "Custumer" -> "Customer"
+            if (string.Equals(UserSession.UserRole, "Customer", StringComparison.OrdinalIgnoreCase))
+            {
+                LoadControl(new product_area());
+            }
+            else if (string.Equals(UserSession.UserRole, "Vendor", StringComparison.OrdinalIgnoreCase))
+            {
+                LoadControl(new Product_Area_Vendor());
+            }
         }
 
         private void guna2Button1_Click(object sender, EventArgs e)
@@ -63,6 +72,18 @@ namespace grocerseeker
             guna2Panel1.Controls.Clear();
             uc.Dock = DockStyle.Fill;
             guna2Panel1.Controls.Add(uc);
+        }
+
+        private void Login_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LogOut_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form1 MainForm = new Form1();
+            MainForm.ShowDialog();
         }
     }
 }

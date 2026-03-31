@@ -91,6 +91,7 @@
             LogOut.Size = new Size(129, 38);
             LogOut.TabIndex = 9;
             LogOut.Text = "LogOut";
+            LogOut.Click += LogOut_Click;
             // 
             // guna2Button6
             // 
@@ -166,6 +167,7 @@
             Login.Size = new Size(43, 15);
             Login.TabIndex = 2;
             Login.Text = "Login, ";
+            Login.Click += Login_Click;
             // 
             // label1
             // 
