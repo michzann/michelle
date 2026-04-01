@@ -49,6 +49,8 @@ namespace grocerseeker
                         UserSession.longitude = longitude;
                         int isCust = Convert.ToInt32(reader["cust_active"]);
                         string selectedRole = role.SelectedItem.ToString();
+                        
+                       
 
 
                         if (selectedRole == "Customer" && isCust == 1)
@@ -60,6 +62,8 @@ namespace grocerseeker
                         {
                             UserSession.UserRole = "Vendor";
                             UserSession.Username = reader["vendor_name"].ToString();
+                            UserSession.UserID = userId;
+                            UserSession.VendorID = userId;
                         }
                         else
                         {

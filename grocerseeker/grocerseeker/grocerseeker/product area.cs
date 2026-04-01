@@ -184,24 +184,29 @@ namespace grocerseeker
                     string query;
                     if (string.Equals(UserSession.UserRole, "Customer", StringComparison.OrdinalIgnoreCase))
                     {
-                        query = "SELECT p.id, p.vendor_id, u.vendor_name, p.product_name AS product_name, c.id AS category, c.name AS category_name, p.unit_type, p.price_per_unit, p.unit_stock " +
+                        query = "SELECT p.id, p.vendor_id, u.vendor_name , p.product_name AS product_name, c.name AS category, c.name AS category_name, p.unit_type, p.price_per_unit, p.unit_stock " +
                                 "FROM products p " +
                                 "LEFT JOIN categories c ON p.category = c.id " +
                                 "LEFT JOIN users u ON p.vendor_id = u.id " +
-                                "WHERE p.delete_at IS NULL";
+                                "WHERE p.delete_at IS NULL AND p.unit_stock >= 0";
 
                         MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn);
                         DataTable dt = new DataTable();
                         adapter.Fill(dt);
 
                         guna2DataGridView1.DataSource = dt;
+                        // Sembunyikan kolom yang tidak ingin dilihat customer/vendor
+                        guna2DataGridView1.Columns["id"].Visible = false;
+                        guna2DataGridView1.Columns["vendor_id"].Visible = false;
+
+
                     }
                     else if (string.Equals(UserSession.UserRole, "Vendor", StringComparison.OrdinalIgnoreCase))
                     {
-                        query = "SELECT p.id, p.vendor_id, p.product_name AS product_name, c.id AS category, c.name AS category_name, p.unit_type, p.price_per_unit, p.unit_stock, p.is_active " +
+                        query = "SELECT p.id, p.vendor_id, u.vendor_name, p.product_name AS product_name, c.name AS category, c.name AS category_name, p.unit_type, p.price_per_unit, p.unit_stock, p.is_active " +
                                 "FROM products p " +
                                 "LEFT JOIN categories c ON p.category = c.id " +
-                                "WHERE p.delete_at IS NULL";
+                                "WHERE p.delete_at IS NULL AND p.unit_stock >= 0";
 
                         MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn);
                         DataTable dt = new DataTable();
@@ -632,6 +637,7 @@ namespace grocerseeker
                 MessageBox.Show("Pilih produk terlebih dahulu!");
                 return;
             }
+            
 
             double qty = (double)guna2NumericUpDown3.Value;
 
@@ -691,25 +697,49 @@ namespace grocerseeker
 
                     insertCmd.ExecuteNonQuery();
 
-                    // 🔹 5. UPDATE STOCK
-                    string updateStock = "UPDATE products SET unit_stock = unit_stock - @qty WHERE id = @id";
+                    // 🔹 5. UPDATE STOCK & AUTO SOFT-DELETE (SATU LANGKAH OPTIMAL)
+                    // Kita taruh delete_at di awal agar dia menghitung berdasarkan stok saat ini
+                    string updateStock = @"
+                                        UPDATE products 
+                                        SET 
+                                        delete_at = IF(unit_stock - @qty <= 0, NOW(), delete_at),
+                                          unit_stock = unit_stock - @qty
+                                        WHERE id = @id AND unit_stock >= @qty";
 
                     MySqlCommand stockCmd = new MySqlCommand(updateStock, conn, transaction);
                     stockCmd.Parameters.AddWithValue("@qty", qty);
                     stockCmd.Parameters.AddWithValue("@id", selectedID);
 
-                    stockCmd.ExecuteNonQuery();
+                    // Mengeksekusi CUKUP 1 KALI SAJA
+                    int rowsAffected = stockCmd.ExecuteNonQuery();
+
+                    // 🔹 SAFETY GUARD (Penting agar stok tidak minus!)
+                    // Jika baris yang terpengaruh = 0, berarti stok di database sudah tidak cukup
+                    if (rowsAffected == 0)
+                    {
+                        MessageBox.Show("Transaksi Batal: Stok di database tidak mencukupi atau sudah habis dibeli orang lain!");
+                        transaction.Rollback();
+                        return;
+                    }
+
+                    // Catatan: LANGKAH 6 (autoDeleteCmd) SEKARANG DIHAPUS TOTAL KARENA SUDAH DIGABUNG DI ATAS
 
                     // 🔹 COMMIT
                     transaction.Commit();
 
                     MessageBox.Show("Pembelian berhasil (Pending)!");
 
+                    // 🔹 RESET ID PENTING
+                    // Reset ID agar pembeli tidak tidak sengaja membeli barang yang sama dua kali jika asal klik tombol Buy
+                    selectedID = 0;
                     LoadData();
+
+
+
                 }
                 catch (Exception ex)
                 {
-                    transaction.Rollback();
+                    
                     MessageBox.Show("Error Buy: " + ex.Message);
                 }
             }

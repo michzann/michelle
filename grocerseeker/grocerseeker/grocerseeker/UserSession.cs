@@ -12,6 +12,8 @@ namespace grocerseeker
 
         public static string Username { get; set; }
 
+        public static int VendorID { get; set; }
+
         public static int UserID { get; set; }
         public static double latitude { get; set; }
         public static double longitude { get; set; }

@@ -59,6 +59,7 @@ namespace grocerseeker
                     dataGridView1.Columns["id"].Visible = false;
                 }
 
+
             }
 
         }
@@ -73,12 +74,15 @@ namespace grocerseeker
             using (MySqlConnection conn = dbHelper.GetConnection())
             {
                 string query = "SELECT * FROM categories";
+
+
                 MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 category.DataSource = dt;
                 category.DisplayMember = "name";
                 category.ValueMember = "id";
+               
             }
         }
 
@@ -114,14 +118,12 @@ namespace grocerseeker
                 return;
             }
 
-            string query = @"INSERT INTO products (product_name, category, unit_type, price_per_unit, unit_stock, is_active) 
-                                VALUES (@nama, @category, @unit_type, @price_per_unit, @unit_stock, @is_active)";
 
             using (MySqlConnection conn = dbHelper.GetConnection())
             {
                 conn.Open();
 
-               
+
                 int newId = -1;
                 using (MySqlCommand idCmd = new MySqlCommand("SELECT COALESCE(MAX(id), 0) + 1 FROM products", conn))
                 {
@@ -136,31 +138,39 @@ namespace grocerseeker
                     }
                 }
 
-               
+
                 object vendorIdParam = DBNull.Value;
                 DateTime createAt = DateTime.Now;
 
-                string insertQuery = @"INSERT INTO products (id, product_name, category, unit_type, price_per_unit, unit_stock, is_active, vendor_id, create_at) 
-                                VALUES (@id, @nama, @category, @unit_type, @price_per_unit, @unit_stock, @is_active, @vendor_id, @create_at)";
+
+                string insertQuery = @"INSERT INTO products 
+                     (vendor_id, product_name, category, unit_type, price_per_unit, unit_stock, is_active) 
+                     VALUES 
+                     (@vendor_id, @nama, @category, @unit_type, @price_per_unit, @unit_stock, @is_active)";
 
                 using (MySqlCommand cmd = new MySqlCommand(insertQuery, conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", newId);
+                    // 2. HAPUS baris cmd.Parameters.AddWithValue("@id", newId);
+
                     cmd.Parameters.AddWithValue("@nama", nama);
                     cmd.Parameters.AddWithValue("@category", categoryId);
                     cmd.Parameters.AddWithValue("@unit_type", unitType);
                     cmd.Parameters.AddWithValue("@price_per_unit", pricePerUnit);
                     cmd.Parameters.AddWithValue("@unit_stock", unitStock);
                     cmd.Parameters.AddWithValue("@is_active", isActive);
-                    cmd.Parameters.AddWithValue("@vendor_id", vendorIdParam);
-                    cmd.Parameters.AddWithValue("@create_at", createAt);
 
+                    // 3. Pastikan menggunakan UserID (Sesuai kode login kamu)
+                    cmd.Parameters.AddWithValue("@vendor_id", UserSession.UserID);
+
+                    // Jalankan eksekusi
                     cmd.ExecuteNonQuery();
+
+                    MessageBox.Show("Produk Berhasil Ditambahkan!");
                 }
+
+
+                LoadData();
             }
-
-            LoadData(); 
-
         }
 
         private void Edit_items_Click(object sender, EventArgs e)
